@@ -3,102 +3,248 @@
   /* Light theme colors */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
+
   --text-primary: #282c34;
   --text-secondary: #61dafb;
+
   --border-color: #e9ecef;
+
   --button-bg: #007bff;
   --button-text: #ffffff;
+
+  /* Hero */
+  --hero-radius: 16px;
+  --hero-overlay: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.70) 100%
+  );
 }
 
 [data-theme="dark"] {
   /* Dark theme colors */
   --bg-primary: #1a1a1a;
   --bg-secondary: #282c34;
+
   --text-primary: #ffffff;
   --text-secondary: #61dafb;
+
   --border-color: #404040;
+
   --button-bg: #0056b3;
   --button-text: #ffffff;
 }
 
 .App {
-  text-align: center;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Top bar */
+.TopBar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg-primary) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-color);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+.TopBar-inner {
+  height: 64px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.Brand {
+  font-weight: 800;
+  letter-spacing: 0.2px;
 }
 
+/* Theme toggle (kept from starter, adapted positioning) */
 .theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
   background-color: var(--button-bg);
   color: var(--button-text);
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  white-space: nowrap;
 }
 
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  transform: translateY(-1px);
+  opacity: 0.95;
 }
 
 .theme-toggle:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Main layout */
+.Main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 20px 56px;
 }
 
-/* Responsive design for mobile */
+/* Hero */
+.Hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--hero-radius);
+  background: #000;
+  border: 1px solid var(--border-color);
+
+  /* Responsive height */
+  height: min(52vh, 560px);
+  min-height: 420px;
+}
+
+.Hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  /* Keep the car in frame (left third) during responsive crops */
+  object-position: 20% center;
+
+  transform: scale(1.02); /* subtle bleed to avoid edge seams */
+}
+
+.Hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay);
+}
+
+.Hero-content {
+  position: relative;
+  height: 100%;
+  padding: 44px 44px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  text-align: right;
+  gap: 14px;
+
+  color: #fff;
+}
+
+.Hero-title {
+  margin: 0;
+  font-size: 44px;
+  line-height: 1.08;
+  letter-spacing: -0.6px;
+  font-weight: 900;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+  max-width: 620px;
+}
+
+.Hero-subtitle {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  opacity: 0.95;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+  max-width: 560px;
+}
+
+.Hero-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.Hero-cta {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.Hero-cta:hover {
+  opacity: 0.95;
+}
+
+.PageSection {
+  padding-top: 26px;
+}
+
+.SectionTitle {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+}
+
+.SectionHint {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
+  .TopBar-inner {
+    height: 60px;
+    padding: 0 14px;
+  }
+
+  .Main {
+    padding: 18px 14px 44px;
+  }
+
+  .Hero {
+    min-height: 320px;
+    height: 360px;
+  }
+
+  .Hero-image {
+    object-position: 25% center;
+  }
+
+  .Hero-content {
+    padding: 22px 18px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .Hero-title {
+    font-size: 30px;
+    max-width: 520px;
+  }
+
+  .Hero-actions {
+    justify-content: center;
+  }
+
   .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
+    padding: 9px 12px;
     font-size: 12px;
   }
 }
